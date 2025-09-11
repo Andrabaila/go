@@ -1,5 +1,6 @@
 // src/App.tsx
 import './assets/styles/global.css'; // Импортируем глобальные стили
+import 'leaflet/dist/leaflet.css'; // Импортируем стили Leaflet
 
 function App() {
   return (
