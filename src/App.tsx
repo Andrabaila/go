@@ -1,15 +1,13 @@
-// src/App.tsx
-import './assets/styles/global.css'; // Импортируем глобальные стили
-import 'leaflet/dist/leaflet.css'; // Импортируем стили Leaflet
+import './assets/styles/global.css';
+import 'leaflet/dist/leaflet.css';
 import MapComponent from './components/map/MapComponent';
+import styles from './App.module.css';
 
 function App() {
   return (
-    <div className="app">
-      {/* Временный заголовок для проверки */}
+    <div className={styles.app}>
       <h1>Walking Game</h1> 
-      {/* Основной контейнер для карты. Важно задать ему размер! */}
-      <div style={{ width: '80vw', height: '70vh', border: '2px solid #ccc' }}>
+      <div className={styles.mapContainer}>
         <MapComponent />
       </div>
     </div>
