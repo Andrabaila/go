@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import useInitMap from '../../hooks/useInitMap';
+import useInitMap from '@/hooks/useInitMap';
 
 function MapComponent() {
   const mapRef = useRef<HTMLDivElement>(null!);
