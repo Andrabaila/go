@@ -1,13 +1,14 @@
 // src/App.tsx
 
-import './assets/styles/global.css';
-import Game from './components/Game';
+import '@/assets/styles/global.css';
+import 'leaflet/dist/leaflet.css';
+
+import MapComponent from './components/map/MapComponent';
 
 function App() {
   return (
-    <div>
-      <h1>Walking Game</h1>
-      <Game />
+    <div className="w-full h-screen">
+      <MapComponent />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 
 class MyScene extends Phaser.Scene {
@@ -9,8 +9,8 @@ class MyScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', '/assets/sky.png'); // фон
-    this.load.image('player', '/assets/player.png'); // спрайт игрока
+    this.load.image('sky', '@/assets/sky.png'); // фон
+    this.load.image('player', '@/assets/player.png'); // спрайт игрока
   }
 
   create() {
