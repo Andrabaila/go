@@ -1,44 +1,74 @@
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import type { Map as LeafletMap } from 'leaflet';
-import { useState } from 'react';
-import FogOfWar from './FogOfWar';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import { useState, useMemo } from 'react';
+import ObjectLayer, { type MapFeatureCollection } from './ObjectLayer';
+import geoJsonData from './osmData.json';
 
-interface Props {
-  mapRef: React.RefObject<LeafletMap | null>;
-}
+export default function MapComponent() {
+  // Получаем уникальные типы объектов из GeoJSON
+  const availableTypes = useMemo(() => {
+    const types = new Set<string>();
+    (geoJsonData as MapFeatureCollection).features.forEach((f) => {
+      if (f.properties.type) types.add(f.properties.type);
+    });
+    return Array.from(types);
+  }, []);
 
-function PlayerPosition({
-  setPosition,
-}: {
-  setPosition: (pos: [number, number]) => void;
-}) {
-  useMapEvents({
-    locationfound(e) {
-      setPosition([e.latlng.lat, e.latlng.lng]);
-    },
-  });
-  return null;
-}
+  // Состояние фильтров — какие типы объектов показывать
+  const [filter, setFilter] = useState<string[]>(availableTypes);
 
-export default function MapComponent({ mapRef }: Props) {
-  const [playerPosition, setPlayerPosition] = useState<[number, number] | null>(
-    null
-  );
+  // Переключение фильтров
+  const toggleType = (type: string) => {
+    setFilter((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
+  };
 
   return (
-    <MapContainer
-      center={[52.1506, 21.0336]}
-      zoom={15}
-      style={{ width: '100%', height: '100vh' }}
-      ref={mapRef}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {playerPosition && <Marker position={playerPosition} />}
-      {playerPosition && <FogOfWar position={playerPosition} radius={30} />}
-      <PlayerPosition setPosition={setPlayerPosition} />
-    </MapContainer>
+    <div style={{ position: 'relative' }}>
+      {/* Блок фильтров */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 70, // сдвиг вправо, чтобы не перекрывать кнопки зума
+          zIndex: 1000,
+          background: 'gray',
+          padding: 10,
+          borderRadius: 8,
+          boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+        }}
+      >
+        {availableTypes.map((type) => (
+          <div key={type}>
+            <label>
+              <input
+                type="checkbox"
+                checked={filter.includes(type)}
+                onChange={() => toggleType(type)}
+              />{' '}
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </label>
+          </div>
+        ))}
+      </div>
+
+      {/* Карта */}
+      <MapContainer
+        center={[52.1506, 21.0336]}
+        zoom={17}
+        style={{ width: '100%', height: '100vh' }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        {/* Слой объектов с фильтром */}
+        <ObjectLayer
+          data={geoJsonData as MapFeatureCollection}
+          filterTypes={filter}
+        />
+      </MapContainer>
+    </div>
   );
 }
