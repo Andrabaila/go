@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="w-full h-screen relative">
-      <MapComponent mapRef={mapRef} />
+      <MapComponent />
       <FogOfWarCanvas mapRef={mapRef} radius={30} />
       <LocateButton mapRef={mapRef} />
     </div>

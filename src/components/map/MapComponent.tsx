@@ -1,10 +1,16 @@
-import { MapContainer, TileLayer } from 'react-leaflet';
+// src/components/map/MapComponent.tsx
+
 import { useState, useMemo } from 'react';
-import ObjectLayer, { type MapFeatureCollection } from './ObjectLayer';
-import geoJsonData from './osmData.json';
+import { MapContainer, TileLayer } from 'react-leaflet';
+
+import ObjectLayer, {
+  type MapFeatureCollection,
+} from '@/components/map/ObjectLayer';
+import ObjectFilterPanel from '@/components/map/ObjectFilterPanel';
+import geoJsonData from '@/components/map/osmData.json';
 
 export default function MapComponent() {
-  // Получаем уникальные типы объектов из GeoJSON
+  // Вычисляем доступные типы объектов из GeoJSON
   const availableTypes = useMemo(() => {
     const types = new Set<string>();
     (geoJsonData as MapFeatureCollection).features.forEach((f) => {
@@ -13,10 +19,10 @@ export default function MapComponent() {
     return Array.from(types);
   }, []);
 
-  // Состояние фильтров — какие типы объектов показывать
+  // Храним выбранные типы объектов для отображения
   const [filter, setFilter] = useState<string[]>(availableTypes);
 
-  // Переключение фильтров
+  // Переключение: включить/выключить тип
   const toggleType = (type: string) => {
     setFilter((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
@@ -25,34 +31,12 @@ export default function MapComponent() {
 
   return (
     <div style={{ position: 'relative' }}>
-      {/* Блок фильтров */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 10,
-          left: 70, // сдвиг вправо, чтобы не перекрывать кнопки зума
-          zIndex: 1000,
-          background: 'gray',
-          padding: 10,
-          borderRadius: 8,
-          boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-        }}
-      >
-        {availableTypes.map((type) => (
-          <div key={type}>
-            <label>
-              <input
-                type="checkbox"
-                checked={filter.includes(type)}
-                onChange={() => toggleType(type)}
-              />{' '}
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </label>
-          </div>
-        ))}
-      </div>
+      <ObjectFilterPanel
+        availableTypes={availableTypes}
+        selectedTypes={filter}
+        onToggle={toggleType}
+      />
 
-      {/* Карта */}
       <MapContainer
         center={[52.1506, 21.0336]}
         zoom={17}
@@ -63,7 +47,6 @@ export default function MapComponent() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Слой объектов с фильтром */}
         <ObjectLayer
           data={geoJsonData as MapFeatureCollection}
           filterTypes={filter}
