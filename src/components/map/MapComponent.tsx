@@ -3,11 +3,10 @@
 import { useState, useMemo } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
-import ObjectLayer, {
-  type MapFeatureCollection,
-} from '@/components/map/ObjectLayer';
+import ObjectLayer from '@/components/map/ObjectLayer';
 import ObjectFilterPanel from '@/components/map/ObjectFilterPanel';
 import geoJsonData from '@/components/map/osmData.json';
+import type { MapFeatureCollection } from '@/types';
 
 export default function MapComponent() {
   // Вычисляем доступные типы объектов из GeoJSON

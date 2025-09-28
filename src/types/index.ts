@@ -1,36 +1,7 @@
-// Основные типы данных приложения
-export interface Coordinates {
-  lat: number;
-  lng: number;
-}
+// src/types/index.ts
 
-export interface Bounds {
-  north: number;
-  south: number;
-  east: number;
-  west: number;
-}
-
-// Состояние игрока
-export interface Player {
-  id: string;
-  level: number;
-  experience: number;
-  experienceToNextLevel: number;
-  gold: number;
-}
-
-// Базовый интерфейс для квеста
-export interface BaseQuest {
-  id: string;
-  title: string;
-  description: string;
-  reward: {
-    gold: number;
-    experience: number;
-  };
-  isCompleted: boolean;
-}
-
-// Типы квестов можно будет расширить позже
-export type Quest = BaseQuest;
+export * from './base'; // базовые типы (Coordinates, Player, Quest)
+export * from './map'; // карта и GeoJSON
+export * from './ui'; // интерфейсные компоненты
+export * from './api'; // API-ответы и запросы
+export * from './game'; // игровая логика

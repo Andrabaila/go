@@ -1,4 +1,5 @@
 // eslint.config.js
+
 import tseslint from 'typescript-eslint';
 import js from '@eslint/js';
 import globals from 'globals';
@@ -24,6 +25,15 @@ export default [
       'react-refresh': reactRefresh,
     },
     rules: {
+      // Запрещаем прямые импорты из подпапок types
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            '@/types/*', // запрет на @/types/map, @/types/game и т.д.
+          ],
+        },
+      ],
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'react-refresh/only-export-components': [
