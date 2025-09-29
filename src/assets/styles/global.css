@@ -16,15 +16,3 @@ body,
   height: 100%;
   width: 100%;
 }
-
-/* Основной контейнер приложения */
-.app {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-}
