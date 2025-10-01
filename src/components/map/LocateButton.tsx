@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { LocateFixed } from 'lucide-react';
 import type { Map as LeafletMap } from 'leaflet';
 
 interface Props {
@@ -22,7 +23,9 @@ export default function LocateButton({ mapRef }: Props) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
-        mapRef.current?.setView([latitude, longitude], 16);
+        if (mapRef.current) {
+          mapRef.current.setView([latitude, longitude], 16); // центрируем карту
+        }
         setLoading(false);
       },
       () => {
@@ -41,11 +44,11 @@ export default function LocateButton({ mapRef }: Props) {
           ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}
           text-white`}
       >
-        {loading ? (
-          <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
-        ) : (
-          <span>📍</span>
-        )}
+        <LocateFixed
+          size={18}
+          strokeWidth={2}
+          className={loading ? 'animate-spin' : ''}
+        />
         {loading ? 'Locating...' : 'My Location'}
       </button>
 

@@ -1,5 +1,3 @@
-// src/App.tsx
-
 import '@/assets/styles/global.css';
 import 'leaflet/dist/leaflet.css';
 import { useRef } from 'react';
@@ -11,7 +9,8 @@ function App() {
 
   return (
     <div className="w-full h-screen relative">
-      <MapComponent />
+      {/* Прокидываем mapRef */}
+      <MapComponent mapRef={mapRef} />
       <FogOfWarCanvas mapRef={mapRef} radius={30} />
       <LocateButton mapRef={mapRef} />
     </div>
