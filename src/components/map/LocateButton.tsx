@@ -15,32 +15,29 @@ export default function LocateButton({ mapRef }: Props) {
     null
   );
 
-  // Получаем местоположение при монтировании
+  // Получаем текущую позицию пользователя при монтировании
   useEffect(() => {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setUserLocation([pos.coords.latitude, pos.coords.longitude]);
-      },
-      () => {
-        setError('⚠️ Unable to retrieve your location.');
-      }
+      (pos) => setUserLocation([pos.coords.latitude, pos.coords.longitude]),
+      () => setError('⚠️ Unable to retrieve your location.')
     );
   }, []);
 
-  // Следим за изменениями карты и сравниваем центр
+  // Проверяем, насколько центр карты отличается от позиции пользователя
   useEffect(() => {
     if (!mapRef.current || !userLocation) return;
 
     const map = mapRef.current;
+
     const checkPosition = () => {
       const center = map.getCenter();
-      const distance = map.distance(userLocation, [center.lat, center.lng]); // в метрах
-      setShouldShow(distance > 50); // показываем кнопку, если центр карты дальше чем на 50м от позиции пользователя
+      const distance = map.distance(userLocation, [center.lat, center.lng]);
+      setShouldShow(distance > 50);
     };
 
     map.on('moveend', checkPosition);
-    checkPosition(); // проверим сразу
+    checkPosition();
 
     return () => {
       map.off('moveend', checkPosition);
@@ -72,14 +69,14 @@ export default function LocateButton({ mapRef }: Props) {
     );
   };
 
-  if (!shouldShow) return null; // ❌ если центр карты рядом с локацией — кнопку не рендерим
+  if (!shouldShow) return null;
 
   return createPortal(
     <div className="fixed top-4 right-4 z-[9999] flex flex-col items-end gap-2">
       <button
         onClick={handleClick}
         disabled={loading}
-        className={`flex items-center gap-2 px-4 py-2 rounded shadow transition
+        className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded shadow transition
           ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}
           text-white`}
       >
@@ -88,7 +85,9 @@ export default function LocateButton({ mapRef }: Props) {
           strokeWidth={2}
           className={loading ? 'animate-spin' : ''}
         />
-        {loading ? 'Locating...' : 'My Location'}
+        <span className="hidden sm:inline">
+          {loading ? 'Locating...' : 'My Location'}
+        </span>
       </button>
 
       {error && (
