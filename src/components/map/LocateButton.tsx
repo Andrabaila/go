@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { LocateFixed } from 'lucide-react';
 import type { Map as LeafletMap } from 'leaflet';
@@ -10,6 +10,42 @@ interface Props {
 export default function LocateButton({ mapRef }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [shouldShow, setShouldShow] = useState(false);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null
+  );
+
+  // Получаем местоположение при монтировании
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserLocation([pos.coords.latitude, pos.coords.longitude]);
+      },
+      () => {
+        setError('⚠️ Unable to retrieve your location.');
+      }
+    );
+  }, []);
+
+  // Следим за изменениями карты и сравниваем центр
+  useEffect(() => {
+    if (!mapRef.current || !userLocation) return;
+
+    const map = mapRef.current;
+    const checkPosition = () => {
+      const center = map.getCenter();
+      const distance = map.distance(userLocation, [center.lat, center.lng]); // в метрах
+      setShouldShow(distance > 50); // показываем кнопку, если центр карты дальше чем на 50м от позиции пользователя
+    };
+
+    map.on('moveend', checkPosition);
+    checkPosition(); // проверим сразу
+
+    return () => {
+      map.off('moveend', checkPosition);
+    };
+  }, [mapRef, userLocation]);
 
   const handleClick = () => {
     if (!navigator.geolocation) {
@@ -24,8 +60,9 @@ export default function LocateButton({ mapRef }: Props) {
       (pos) => {
         const { latitude, longitude } = pos.coords;
         if (mapRef.current) {
-          mapRef.current.setView([latitude, longitude], 16); // центрируем карту
+          mapRef.current.setView([latitude, longitude], 16);
         }
+        setUserLocation([latitude, longitude]);
         setLoading(false);
       },
       () => {
@@ -34,6 +71,8 @@ export default function LocateButton({ mapRef }: Props) {
       }
     );
   };
+
+  if (!shouldShow) return null; // ❌ если центр карты рядом с локацией — кнопку не рендерим
 
   return createPortal(
     <div className="fixed top-4 right-4 z-[9999] flex flex-col items-end gap-2">
