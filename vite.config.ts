@@ -7,6 +7,7 @@ import { configDefaults } from 'vitest/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  base: '/go/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

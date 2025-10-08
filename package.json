@@ -10,7 +10,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "prepare": "husky",
-    "preview": "vite preview",
+    "preview": "vite preview --base=/go/",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
