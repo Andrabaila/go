@@ -1,7 +1,7 @@
 import '@/assets/styles/global.css';
 import 'leaflet/dist/leaflet.css';
 import { useRef } from 'react';
-import { MapComponent, LocateButton, FogOfWarCanvas } from '@/components';
+import { MapComponent, LocateButton } from '@/components';
 import type { Map as LeafletMap } from 'leaflet';
 
 function App() {
@@ -11,7 +11,6 @@ function App() {
     <div className="w-full h-screen relative">
       {/* Прокидываем mapRef */}
       <MapComponent mapRef={mapRef} />
-      <FogOfWarCanvas mapRef={mapRef} radius={30} />
       <LocateButton mapRef={mapRef} />
     </div>
   );
