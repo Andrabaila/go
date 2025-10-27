@@ -10,6 +10,7 @@ import { usePlayerPosition } from '@/hooks/usePlayerPosition';
 import { ObjectLayer, OsmParksLayer } from '@/components';
 import geoJsonData from '@/assets/data/osmData.json';
 import type { MapFeatureCollection } from '@/types';
+import LightAroundPlayer from './LightAroundPlayer';
 
 interface Props {
   mapRef: React.RefObject<LeafletMap | null>;
@@ -58,6 +59,8 @@ export default function MapComponent({ mapRef }: Props) {
 
         {/* Маркер игрока */}
         <PlayerMarker position={playerPosition} follow={followPlayer} />
+
+        <LightAroundPlayer position={playerPosition} radius={100} />
 
         {/* Монеты */}
         <CoinsLayer playerPosition={playerPosition} />
