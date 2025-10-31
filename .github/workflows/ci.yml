@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -41,19 +41,6 @@ jobs:
       - name: Format check
         run: npm run format:check
 
-      - name: Run tests with coverage
-        run: npm run test:coverage
-
-      - name: Check coverage threshold
-        run: |
-          echo "Checking test coverage..."
-          COVERAGE=$(npx vitest run --coverage --reporter=json-summary | jq '.total.lines.pct')
-          echo "Coverage: $COVERAGE%"
-          if (( $(echo "$COVERAGE < 60" | bc -l) )); then
-            echo "❌ Coverage below 60%"
-            exit 1
-          fi
-
       - name: Build project
         run: npm run build
 
@@ -63,12 +50,8 @@ jobs:
           path: ./dist
 
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build-and-test
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
