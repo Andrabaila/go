@@ -34,7 +34,12 @@ export default tseslint.config(
   },
   // 👇 добавляем override для NestJS файлов
   {
-    files: ['**/*.schema.ts', '**/*.module.ts', '**/*.controller.ts', '**/*.service.ts'],
+    files: [
+      '**/*.schema.ts',
+      '**/*.module.ts',
+      '**/*.controller.ts',
+      '**/*.service.ts',
+    ],
     rules: {
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
