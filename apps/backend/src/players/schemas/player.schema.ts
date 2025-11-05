@@ -6,19 +6,21 @@ const schemaOptions: SchemaOptions = { timestamps: true }; // или {}
 @Schema(schemaOptions)
 export class Player extends Document {
   @Prop({ required: true })
-  username: string;
+  username: string | undefined;
 
   @Prop({ default: 0 })
-  balance: number;
+  balance: number | undefined;
 
   @Prop({ type: Array, default: [] })
-  exploredAreas: {
-    type: 'Polygon' | 'Point';
-    coordinates: number[][] | number[];
-  }[];
+  exploredAreas:
+    | {
+        type: 'Polygon' | 'Point';
+        coordinates: number[][] | number[];
+      }[]
+    | undefined;
 
   @Prop({ type: Array, default: [] })
-  artifactsCollected: string[];
+  artifactsCollected: string[] | undefined;
 }
 
 export const PlayerSchema = SchemaFactory.createForClass(Player);
