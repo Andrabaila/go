@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GameObjectsService } from './game-objects.service';
+import { GameObjectsService } from './game-objects.service.js';
 
 describe('GameObjectsService', () => {
   let service: GameObjectsService;

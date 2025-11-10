@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Player } from './player.entity';
+import { Player } from './player.entity.js';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class PlayersService {
   constructor(
     @InjectRepository(Player)
-    private readonly playerRepo: Repository<Player>,
+    private readonly playerRepo: Repository<Player>
   ) {}
 
   async create(username: string): Promise<Player> {
@@ -31,7 +31,7 @@ export class PlayersService {
   async register(
     username: string,
     email: string,
-    password: string,
+    password: string
   ): Promise<Player> {
     // хэшируем пароль перед сохранением
     const passwordHash = await bcrypt.hash(password, 10);

@@ -1,0 +1,25 @@
+{
+  // 💾 Автоисправления и форматирование
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // 🧭 Рабочие директории Turborepo
+  "eslint.workingDirectories": [
+    { "directory": "./", "changeProcessCWD": true }
+  ],
+
+  // ✅ Файлы, которые ESLint будет проверять
+  "eslint.validate": ["javascript", "typescript", "typescriptreact", "html"],
+  "eslint.probe": ["javascript", "typescript", "typescriptreact", "html"],
+
+  // 🔄 Включаем отображение статуса ESLint внизу
+  "eslint.alwaysShowStatus": true,
+
+  // ⚙️ Настройка форматтера для HTML
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

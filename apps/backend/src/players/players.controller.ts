@@ -1,6 +1,6 @@
 import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
-import { PlayersService } from './players.service';
-import { Player } from './player.entity';
+import { PlayersService } from './players.service.js';
+import { Player } from './player.entity.js';
 
 @Controller('players')
 export class PlayersController {
@@ -10,7 +10,7 @@ export class PlayersController {
   async register(
     @Body('username') username: string,
     @Body('email') email: string,
-    @Body('password') password: string,
+    @Body('password') password: string
   ): Promise<Player> {
     // Проверка на пустые поля
     if (!username || !email || !password) {

@@ -1,26 +1,29 @@
 {
   "name": "monorepo",
   "private": true,
+  "license": "LICENSED",
+  "author": "Yury Andrabaila",
   "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean && rimraf node_modules",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "turbo run lint"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
-    "eslint": "^9.36.0",
+    "eslint": "^9.39.1",
     "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.19",
     "rimraf": "^6.0.1",
     "turbo": "latest"
-  },
-  "scripts": {
-    "dev": "turbo run dev --parallel",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "clean": "turbo run clean && rimraf node_modules",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
   },
   "packageManager": "npm@10.8.2"
 }

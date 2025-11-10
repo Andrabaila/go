@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PlayersController } from './players-mongo.controller';
+import { PlayersController } from './players.controller.js';
 
 describe('PlayersController', () => {
   let controller: PlayersController;

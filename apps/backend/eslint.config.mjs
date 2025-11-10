@@ -1,26 +1,27 @@
-// apps/backend/eslint.config.mjs
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default [
   {
-    files: ["**/*.ts"],
+    files: ['**/*.ts'],
+    ignores: ['node_modules', '**/dist/**'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: join(__dirname, "tsconfig.eslint.json"),
-        tsconfigRootDir: __dirname,
+        project: [join(__dirname, 'tsconfig.eslint.json')],
+        tsconfigRootDir: __dirname, // 💥 критическая строка
+        sourceType: 'module',
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      '@typescript-eslint': tseslint,
     },
     rules: {
-      "@typescript-eslint/no-unused-vars": ["warn"],
+      '@typescript-eslint/no-unused-vars': ['warn'],
     },
   },
 ];

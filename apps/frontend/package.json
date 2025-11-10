@@ -2,6 +2,8 @@
   "name": "go-frontend",
   "version": "0.0.0",
   "private": true,
+  "license": "LICENSED",
+  "author": "Yury Andrabaila",
   "type": "module",
   "scripts": {
     "build": "vite build",
@@ -71,8 +73,6 @@
     "jsdom": "^27.0.0",
     "lint-staged": "^16.2.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
-    "prettier-plugin-packagejson": "^2.5.19",
     "rimraf": "^6.0.1",
     "tailwindcss": "^4.1.13",
     "tw-animate-css": "^1.4.0",

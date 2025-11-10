@@ -1,4 +1,3 @@
-// eslint.config.js
 import tseslint from 'typescript-eslint';
 import js from '@eslint/js';
 import globals from 'globals';
@@ -13,6 +12,7 @@ const __dirname = path.dirname(__filename);
 
 const backendRoot = path.join(__dirname, 'apps/backend');
 const frontendRoot = path.join(__dirname, 'apps/frontend');
+const packagesRoot = path.join(__dirname, 'packages/shared');
 
 export default [
   {
@@ -59,6 +59,15 @@ export default [
       parserOptions: {
         project: [path.join(frontendRoot, 'tsconfig.json')],
         tsconfigRootDir: frontendRoot,
+      },
+    },
+  },
+  {
+    files: ['packages/shared/**/*.{ts,tsx,js,jsx}'],
+    languageOptions: {
+      parserOptions: {
+        project: [path.join(packagesRoot, 'tsconfig.json')],
+        tsconfigRootDir: packagesRoot,
       },
     },
   },

@@ -1,15 +1,19 @@
-// apps/backend/tsconfig.json
-
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "rootDir": "src",
     "outDir": "./dist",
     "sourceMap": true,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true,
-    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "noEmit": true
   },
   "include": ["src/**/*"]
 }

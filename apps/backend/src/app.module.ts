@@ -1,12 +1,10 @@
-// app.module.ts
-
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PlayersModule } from './players/players.module';
-import { GameObjectsModule } from './game-objects/game-objects.module';
+import { AppController } from './app.controller.ts';
+import { AppService } from './app.service.js';
+import { PlayersModule } from './players/players.module.js';
+import { GameObjectsModule } from './game-objects/game-objects.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Player } from './players/player.entity'; // сущность для Postgres
+import { Player } from './players/player.entity.js'; // сущность для Postgres
 
 @Module({
   imports: [

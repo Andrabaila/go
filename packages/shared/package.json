@@ -1,0 +1,12 @@
+{
+  "name": "@go/shared",
+  "version": "0.0.1",
+  "private": true,
+  "license": "LICENSED",
+  "author": "Yury Andrabaila",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint --ext .ts"
+  }
+}
