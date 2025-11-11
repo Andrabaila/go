@@ -21,10 +21,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "baseUrl": ".",
+    "baseUrl": "../../",
     "paths": {
-      "@shared/*": ["../../packages/shared/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["apps/frontend/src/*"],
+      "@shared/*": ["packages/shared/src/*"]
     }
   },
   "include": ["src", "vite.config.ts", "vitest.config.ts", "env.d.ts"],

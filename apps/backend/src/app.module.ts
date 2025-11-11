@@ -5,6 +5,8 @@ import { PlayersModule } from './players/players.module.js';
 import { GameObjectsModule } from './game-objects/game-objects.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from './players/player.entity.js'; // сущность для Postgres
+import { AuthModule } from './auth/auth.module.js';
+import { UsersModule } from './users/users.module.js';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { Player } from './players/player.entity.js'; // сущность для 
     }),
     PlayersModule,
     GameObjectsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
