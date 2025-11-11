@@ -1,4 +1,9 @@
-import { Prop, Schema, SchemaFactory, SchemaOptions } from '@nestjs/mongoose';
+import {
+  Prop,
+  Schema,
+  SchemaFactory,
+  type SchemaOptions,
+} from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 const schemaOptions: SchemaOptions = { timestamps: true }; // или {}
