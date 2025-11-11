@@ -9,13 +9,11 @@
     "build": "vite build",
     "clean": "rimraf dist",
     "dev": "vite --open",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "lint": "eslint .",
     "preview": "vite preview --base=/go/",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
