@@ -4,9 +4,10 @@ import { AppService } from './app.service.js';
 import { PlayersModule } from './players/players.module.js';
 import { GameObjectsModule } from './game-objects/game-objects.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Player } from './players/player.entity.js'; // сущность для Postgres
+import { Player } from './players/player.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
+import { User } from './users/user.entity.js';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { UsersModule } from './users/users.module.js';
       username: 'postgres',
       password: 'very-secret-password',
       database: 'go_game',
-      entities: [Player],
+      entities: [Player, User],
       synchronize: true,
     }),
     PlayersModule,
@@ -25,7 +26,7 @@ import { UsersModule } from './users/users.module.js';
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController], // <── UsersController УБРАТЬ
+  providers: [AppService], // <── UsersService УБРАТЬ
 })
 export class AppModule {}

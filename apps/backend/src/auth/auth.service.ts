@@ -1,8 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UsersService, type UserEntity } from '../users/users.service.js';
+import { UsersService } from '../users/users.service.js';
+import type { User } from '../users/user.entity.js';
 import type { AuthResponse } from '@shared/types/auth.js';
+import type { RegisterDto } from './dto/register.dto.js';
 
 @Injectable()
 export class AuthService {
@@ -11,38 +13,44 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  /**
-   * Проверяет корректность логина и пароля.
-   * Возвращает объект пользователя без пароля, если успешно.
-   */
   async validateUser(
     email: string,
     password: string
-  ): Promise<Omit<UserEntity, 'password'>> {
+  ): Promise<Omit<User, 'passwordHash'>> {
     const user = await this.usersService.findByEmail(email);
-    if (user && (await bcrypt.compare(password, user.password))) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password: _password, ...result } = user;
-      return result;
-    }
-    throw new UnauthorizedException('Invalid credentials');
-  }
+    if (!user) throw new UnauthorizedException('Invalid credentials');
 
-  /**
-   * Создаёт JWT токен на основе данных пользователя.
-   */
-  async login(user: Omit<UserEntity, 'password'>): Promise<AuthResponse> {
-    const payload = { email: user.email, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isMatch) throw new UnauthorizedException('Invalid credentials');
+
+    // Создаём новый объект без passwordHash
+    const result: Omit<User, 'passwordHash'> = {
+      id: user.id,
+      email: user.email,
     };
+
+    return result;
   }
 
-  /**
-   * Регистрирует нового пользователя с хэшированием пароля.
-   */
-  async register(email: string, password: string): Promise<UserEntity> {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    return this.usersService.create({ email, password: hashedPassword });
+  async login(user: Omit<User, 'passwordHash'>): Promise<AuthResponse> {
+    const payload = { email: user.email, sub: user.id };
+    return { access_token: this.jwtService.sign(payload) };
+  }
+
+  async register(dto: RegisterDto): Promise<AuthResponse> {
+    const { email, password } = dto;
+
+    // Проверка, есть ли уже пользователь
+    const existing = await this.usersService.findByEmail(email);
+    if (existing) throw new UnauthorizedException('User already exists');
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = await this.usersService.create({
+      email,
+      passwordHash,
+    });
+
+    // Возвращаем JWT сразу после регистрации
+    return this.login(user);
   }
 }

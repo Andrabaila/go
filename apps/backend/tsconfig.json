@@ -16,10 +16,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": "../../",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["apps/frontend/src/*"],
-      "@shared/*": ["packages/shared/src/*"]
+      "@/*": ["src/*"],
+      "@shared/*": ["../../packages/shared/dist/*"]
     }
   },
   "include": ["src", "env.d.ts"],

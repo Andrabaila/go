@@ -1,45 +1,29 @@
 import { Injectable } from '@nestjs/common';
-
-/**
- * Тип пользователя
- */
-export interface UserEntity {
-  id: number;
-  email: string;
-  password: string;
-}
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity.js';
 
 @Injectable()
 export class UsersService {
-  // Пока что храним пользователей в памяти
-  private users: UserEntity[] = [];
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
+  ) {}
 
   /**
    * Найти пользователя по email
    */
-  async findByEmail(email: string): Promise<UserEntity | undefined> {
-    return this.users.find((u) => u.email === email);
+
+  async create(user: Partial<User>): Promise<User> {
+    const newUser = this.userRepository.create(user);
+    return this.userRepository.save(newUser);
   }
 
-  /**
-   * Создать нового пользователя
-   */
-  async create(user: Omit<UserEntity, 'id'>): Promise<UserEntity> {
-    const newUser: UserEntity = {
-      id: Date.now(), // простая генерация ID
-      ...user,
-    };
-    this.users.push(newUser);
-    return newUser;
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOneBy({ email });
   }
 
-  /**
-   * Вернуть всех пользователей (для отладки)
-   */
-  async findAll(): Promise<Omit<UserEntity, 'password'>[]> {
-    return this.users.map((user) => ({
-      id: user.id,
-      email: user.email,
-    }));
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 }
