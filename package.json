@@ -1,82 +1,59 @@
 {
-  "name": "go",
-  "version": "0.0.0",
+  "name": "monorepo",
   "private": true,
+  "license": "LICENSED",
+  "author": "Yury Andrabaila",
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "build": "tsc -b && vite build",
-    "dev": "vite --open",
+    "build": "turbo run build",
+    "clean": "turbo run clean && rimraf node_modules",
+    "clean:all": "rimraf node_modules apps/**/node_modules packages/**/node_modules apps/**/dist packages/**/dist .turbo",
+    "dev": "turbo run dev --parallel",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint .",
+    "lint": "turbo run lint",
     "prepare": "husky",
-    "preview": "vite preview --base=/go/",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test": "turbo run test"
   },
   "lint-staged": {
-    "backend/src/**/*.ts": [
+    "**/*.{ts,tsx,js,jsx}": [
       "npx eslint --fix",
       "npx prettier --write"
     ],
-    "src/**/*.{ts,tsx,js,jsx}": [
-      "npx eslint --fix",
+    "**/*.{json,css,md,html,yml,yaml}": [
       "npx prettier --write"
-    ],
-    "*.{json,css,md,html}": [
-      "prettier --write"
     ]
   },
-  "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-slot": "^1.2.3",
-    "@radix-ui/react-tooltip": "^1.2.8",
-    "@tailwindcss/vite": "^4.1.13",
-    "@turf/turf": "^7.2.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "leaflet": "^1.9.4",
-    "leaflet-geometryutil": "^0.10.3",
-    "lucide-react": "^0.544.0",
-    "phaser": "^3.90.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-leaflet": "^5.0.0",
-    "tailwind-merge": "^3.3.1"
-  },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
-    "@testing-library/jest-dom": "^6.8.0",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
+    "@eslint/js": "^9.39.1",
     "@types/geojson": "^7946.0.16",
-    "@types/leaflet": "^1.9.20",
-    "@types/node": "^24.8.1",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^5.0.0",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.36.0",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.3.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
     "husky": "^9.1.7",
-    "jsdom": "^27.0.0",
-    "lint-staged": "^16.2.0",
-    "postcss": "^8.5.6",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "prettier-plugin-packagejson": "^2.5.19",
-    "tailwindcss": "^4.1.13",
-    "tw-animate-css": "^1.4.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.39.1",
-    "vite": "^7.1.2",
-    "vitest": "^3.2.4"
+    "rimraf": "^6.0.1",
+    "turbo": "latest",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3"
+  },
+  "packageManager": "npm@11.6.0",
+  "engines": {
+    "node": ">=22.18.0"
   }
 }
