@@ -18,7 +18,7 @@ export default function MainMenu({
   const inactive = 'text-white hover:text-blue-400';
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-gray-900 text-xs flex justify-around items-center py-2 shadow-md z-[1001]">
+    <nav className="fixed bottom-0 left-0 w-full bg-gray-900/80 text-xs flex justify-around items-center py-2 shadow-md z-[1001]">
       <button
         onClick={onMapSettings}
         className={`${base} ${activeMenu === 'map' ? active : inactive}`}

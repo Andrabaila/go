@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ObjectFilterPanel, ButtonFollowPlayer } from '@/components';
+import { ObjectFilterPanel } from '@/components';
 import ButtonLocate from '@/components/ui/ButtonLocate';
 import type { MapFeatureCollection } from '@shared/types';
 import geoJsonData from '@/assets/data/osmData.json';
@@ -18,8 +18,6 @@ interface Props {
 export default function MapControls({
   filter,
   setFilter,
-  followPlayer,
-  setFollowPlayer,
   mapRef,
   isOpen,
 }: Props) {
@@ -45,10 +43,6 @@ export default function MapControls({
         availableTypes={availableTypes}
         selectedTypes={filter}
         onToggle={toggleType}
-      />
-      <ButtonFollowPlayer
-        follow={followPlayer}
-        onToggle={() => setFollowPlayer((prev) => !prev)}
       />
       <ButtonLocate mapRef={mapRef} />
     </>

@@ -16,19 +16,18 @@ export default function StatusBar() {
   });
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-gray-900 text-white text-sm flex justify-around items-center py-2 shadow-md z-[1000]">
+    <div className="w-full bg-gray-900/80 text-white text-sm flex justify-around items-center py-2 shadow-md">
       <div>
-        🚶 Пройдено:{' '}
+        👣{' '}
         <span className="font-semibold">
           {(status.distance / 1000).toLocaleString(undefined, {
             maximumFractionDigits: 1,
-          })}{' '}
-          км
+          })}
         </span>
       </div>
 
       <div>
-        🗺️ Исследовано:{' '}
+        🗺️{' '}
         <span className="font-semibold">
           {status.exploredArea.toLocaleString(undefined, {
             maximumFractionDigits: 0,
@@ -38,12 +37,11 @@ export default function StatusBar() {
       </div>
 
       <div>
-        🎒 Предметы:{' '}
-        <span className="font-semibold">{status.itemsCollected}</span>
+        🎒 <span className="font-semibold">{status.itemsCollected}</span>
       </div>
 
       <div>
-        💰 Goins: <span className="font-semibold">{status.balance}</span>
+        💰 <span className="font-semibold">{status.balance}</span>
       </div>
     </div>
   );

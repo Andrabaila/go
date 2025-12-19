@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import type { Map as LeafletMap } from 'leaflet';
 import {
   MapComponent,
-  StatusBar,
+  TopUI,
   BackpackBottomSheet,
   LoginRegisterModal,
   LoginRegisterButton,
@@ -40,7 +40,7 @@ function App() {
         isOpen={activeMenu === 'inventory'}
         onClose={() => setActiveMenu(null)}
       />
-      <StatusBar />
+      <TopUI />
       <MainMenu
         activeMenu={activeMenu}
         onMapSettings={() => toggleMenu('map')}

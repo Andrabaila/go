@@ -1,6 +1,6 @@
-.leaflet-top.leaflet-left {
-  top: 30px;
-  left: 8px;
+.leaflet-control-attribution {
+  font-size: 9px;
+  opacity: 0.5;
 }
 
 /* Темная/светлая тема */

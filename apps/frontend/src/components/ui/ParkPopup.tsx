@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-// local Park type because "@/components" doesn't export Park
 type Park = {
   id: number | string;
   name: string;
