@@ -81,7 +81,6 @@ export default function ButtonLocate({ mapRef }: Props) {
       }
     );
   };
-
   if (!shouldShow) return null;
 
   return (

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ObjectFilterPanel, ButtonFollowPlayer } from '@/components';
+import { ObjectFilterPanel } from '@/components';
 import ButtonLocate from '@/components/ui/ButtonLocate';
 import type { MapFeatureCollection } from '@shared/types';
 import geoJsonData from '@/assets/data/osmData.json';
@@ -11,14 +11,15 @@ interface Props {
   followPlayer: boolean;
   setFollowPlayer: React.Dispatch<React.SetStateAction<boolean>>;
   mapRef: React.RefObject<LeafletMap | null>;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function MapControls({
   filter,
   setFilter,
-  followPlayer,
-  setFollowPlayer,
   mapRef,
+  isOpen,
 }: Props) {
   const availableTypes = useMemo(() => {
     const types = new Set<string>();
@@ -34,16 +35,14 @@ export default function MapControls({
     );
   };
 
+  if (!isOpen) return null;
+
   return (
     <>
       <ObjectFilterPanel
         availableTypes={availableTypes}
         selectedTypes={filter}
         onToggle={toggleType}
-      />
-      <ButtonFollowPlayer
-        follow={followPlayer}
-        onToggle={() => setFollowPlayer((prev) => !prev)}
       />
       <ButtonLocate mapRef={mapRef} />
     </>

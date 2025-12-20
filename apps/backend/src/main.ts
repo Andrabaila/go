@@ -15,9 +15,12 @@ const __dirname = path.dirname(__filename);
 async function bootstrap() {
   // Читаем сертификаты
   const httpsOptions = {
-    key: fs.readFileSync(path.join(__dirname, '../../../cert/key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, '../../../cert/cert.pem')),
+    key: fs.readFileSync(
+      path.join(__dirname, '..', 'cert', 'localhost-key.pem')
+    ),
+    cert: fs.readFileSync(path.join(__dirname, '..', 'cert', 'localhost.pem')),
   };
+  console.log('CERT:', httpsOptions);
 
   const app = await NestFactory.create(AppModule, { httpsOptions });
 

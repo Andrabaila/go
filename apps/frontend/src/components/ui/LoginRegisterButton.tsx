@@ -1,8 +1,16 @@
 interface Props {
   onClick: () => void;
+  userEmail: string | null;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default function LoginRegisterButton({ onClick }: Props) {
+export default function LoginRegisterButton({
+  onClick,
+  userEmail,
+  isOpen,
+}: Props) {
+  if (!isOpen) return null;
   return (
     <button
       onClick={onClick}
@@ -15,7 +23,7 @@ export default function LoginRegisterButton({ onClick }: Props) {
     cursor-pointer
     "
     >
-      Войти / Зарегистрироваться
+      {userEmail ?? 'Войти / Зарегистрироваться'}
     </button>
   );
 }
