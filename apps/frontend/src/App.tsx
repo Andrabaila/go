@@ -26,7 +26,7 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen relative">
+    <div className="relative h-screen w-full">
       <MapControls
         filter={filter}
         setFilter={setFilter}
@@ -62,7 +62,7 @@ function App() {
           setModalOpen(false); // ← закрываем модалку
         }}
       />
-      <MapComponent mapRef={mapRef} />
+      <MapComponent mapRef={mapRef} followPlayer={false} />
     </div>
   );
 }

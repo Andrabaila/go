@@ -14,14 +14,7 @@ export default function LoginRegisterButton({
   return (
     <button
       onClick={onClick}
-      className="
-    absolute bottom-10 left-30 z-[1000]
-    px-3 py-2
-    bg-gray-600 text-white
-    rounded-md
-    font-bold
-    cursor-pointer
-    "
+      className="absolute bottom-10 right-2 z-[1000] cursor-pointer rounded-md bg-gray-600/80 px-3 py-2 font-bold text-white"
     >
       {userEmail ?? 'Войти / Зарегистрироваться'}
     </button>

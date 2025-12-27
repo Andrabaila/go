@@ -6,5 +6,6 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "auto",
-  "plugins": ["prettier-plugin-packagejson"]
+  "plugins": ["prettier-plugin-packagejson", "prettier-plugin-tailwindcss"],
+  "tailwindConfig": "./packages/config/tailwind/tailwind.config.ts"
 }
