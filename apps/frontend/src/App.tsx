@@ -10,6 +10,7 @@ import {
   LoginRegisterButton,
   MapControls,
   MainMenu,
+  QuestsList,
 } from '@/components';
 type MainMenuItem = 'map' | 'quests' | 'inventory' | 'profile' | null;
 
@@ -34,6 +35,10 @@ function App() {
         setFollowPlayer={setFollowPlayer}
         mapRef={mapRef}
         isOpen={activeMenu === 'map'}
+        onClose={() => setActiveMenu(null)}
+      />
+      <QuestsList
+        isOpen={activeMenu === 'quests'}
         onClose={() => setActiveMenu(null)}
       />
       <BackpackBottomSheet
