@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { User } from './users/user.entity.js';
 import { TileModule } from './tiles/tile.module.js';
+import { QuestsModule } from './quests/quests.module.js';
+import { Quest } from './quests/quest.entity.js';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { TileModule } from './tiles/tile.module.js';
       username: 'postgres',
       password: 'very-secret-password',
       database: 'go_game',
-      entities: [Player, User],
+      entities: [Player, User, Quest],
       synchronize: true,
     }),
     PlayersModule,
@@ -27,6 +29,7 @@ import { TileModule } from './tiles/tile.module.js';
     AuthModule,
     UsersModule,
     TileModule,
+    QuestsModule,
   ],
   controllers: [AppController], // <── UsersController УБРАТЬ
   providers: [AppService], // <── UsersService УБРАТЬ

@@ -10,6 +10,7 @@ import {
   LoginRegisterButton,
   MapControls,
   MainMenu,
+  QuestsList,
 } from '@/components';
 type MainMenuItem = 'map' | 'quests' | 'inventory' | 'profile' | null;
 
@@ -26,7 +27,7 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen relative">
+    <div className="relative h-screen w-full">
       <MapControls
         filter={filter}
         setFilter={setFilter}
@@ -34,6 +35,10 @@ function App() {
         setFollowPlayer={setFollowPlayer}
         mapRef={mapRef}
         isOpen={activeMenu === 'map'}
+        onClose={() => setActiveMenu(null)}
+      />
+      <QuestsList
+        isOpen={activeMenu === 'quests'}
         onClose={() => setActiveMenu(null)}
       />
       <BackpackBottomSheet
@@ -62,7 +67,7 @@ function App() {
           setModalOpen(false); // ← закрываем модалку
         }}
       />
-      <MapComponent mapRef={mapRef} />
+      <MapComponent mapRef={mapRef} followPlayer={false} />
     </div>
   );
 }
