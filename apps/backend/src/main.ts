@@ -13,16 +13,29 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function bootstrap() {
-  // Читаем сертификаты
-  const httpsOptions = {
-    key: fs.readFileSync(
-      path.join(__dirname, '..', 'cert', 'localhost-key.pem')
-    ),
-    cert: fs.readFileSync(path.join(__dirname, '..', 'cert', 'localhost.pem')),
-  };
-  console.log('CERT:', httpsOptions);
+  let app;
+  let https = false;
 
-  const app = await NestFactory.create(AppModule, { httpsOptions });
+  try {
+    // Локальная сборка HTTPS
+    const httpsOptions = {
+      key: fs.readFileSync(
+        path.join(__dirname, '..', 'cert', 'localhost-key.pem')
+      ),
+      cert: fs.readFileSync(
+        path.join(__dirname, '..', 'cert', 'localhost.pem')
+      ),
+    };
+    app = await NestFactory.create(AppModule, { httpsOptions });
+    https = true;
+    console.log('✅ Running with local HTTPS');
+  } catch {
+    // Если сертификатов нет — просто HTTP (для Railway)
+    app = await NestFactory.create(AppModule);
+    console.log(
+      '⚠️ Certificates not found, running on HTTP (proxy provides HTTPS)'
+    );
+  }
 
   app.enableCors({
     origin: process.env.CLIENT_URL || 'https://localhost:5173',
@@ -39,7 +52,9 @@ async function bootstrap() {
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
-  console.log(`🚀 Server running on https://localhost:${port}`);
+  console.log(
+    `🚀 Server running on ${https ? 'https' : 'http'}://localhost:${port}`
+  );
 }
 
 bootstrap().catch((err) => {
